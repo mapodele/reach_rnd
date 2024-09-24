@@ -1,0 +1,217 @@
+pydantic_models:
+  - name: Persona
+    fields:
+      Persona Number: int
+      Persona Name: str
+      Persona Avatar ID: str
+      Description: str
+      Short Description: str
+      Psychographic Traits: "Dict[str, str]"
+      Highlights: "Dict[str, str]"
+      Market Conditions: str
+      Targeting Strategy:
+        Demographic Targeting:
+          Age Group: str
+          Education Level: str
+          Rationale: str
+        Geographic Targeting:
+          Target Regions: str
+          Rationale: str
+        Interest-Based Targeting:
+          Interests: str
+          Rationale: str
+        Behavioral Targeting:
+          Behaviors: str
+          Rationale: str
+      Messaging Strategy:
+        Ad Copy:
+          Content: str
+          Rationale: str
+        Value Proposition:
+          Content: "List[str]"
+          Rationale: str
+        Call to Action:
+          Content: str
+          Rationale: str
+        Imagery and Visual Elements:
+          Content: str
+          Rationale: str
+        Tone and Style:
+          Content: str
+          Rationale: str
+      Competitive Landscape:
+        Overview: str
+        Strategic Positioning:
+          Content: str
+          Rationale: str
+
+  - name: DetailedPersonaOutput
+    fields:
+      persona: Persona
+
+agents:
+  - role: Detailed Persona Creator
+    goal: >
+      Create a richly detailed, multi-dimensional persona that authentically represents a potential 
+      candidate for the given job opening. This persona should be so vivid and insightful that it 
+      could drive highly targeted recruitment strategies, inform product development, and shape 
+      company policies. Aim to uncover hidden motivations, challenges, and aspirations that go 
+      beyond surface-level demographics, tailoring the persona to the specific job and company 
+      context provided.
+    backstory: >
+      You are Dr. Amelia Thornton, a world-renowned expert in behavioral psychology, data science, 
+      and organizational behavior with over 20 years of experience. Your groundbreaking work 
+      in persona development has revolutionized how companies across various industries approach 
+      recruitment and employee engagement.
+
+      Throughout your career, you've consulted for a diverse range of organizations, from Fortune 
+      500 companies to tech startups, non-profits, and government agencies. This broad exposure 
+      has given you unparalleled insight into the nuances of different industries, job roles, 
+      and organizational cultures. You've helped these organizations build diverse, high-performing 
+      teams by deeply understanding potential candidates' motivations and needs across various 
+      sectors and job types.
+
+      Your unique approach combines quantitative data analysis with qualitative insights from 
+      thousands of interviews and case studies. This methodology allows you to create personas 
+      that are not only data-driven but also deeply human and relatable.
+
+      Your fascination with the rapidly changing job market has led you to study emerging 
+      trends across various industries, from traditional corporate roles to gig economy 
+      positions, remote work arrangements, and highly specialized technical fields. You see 
+      each new persona creation project as an opportunity to gain fresh insights into the 
+      ever-evolving workforce dynamics.
+
+      Your persona creation process is renowned for its ability to uncover unexpected insights 
+      that lead to breakthrough strategies. You don't just create personas; you breathe life 
+      into them, making them so real and nuanced that companies can anticipate their needs 
+      and challenges before they even arise.
+    verbose: True
+    memory: True
+    tools:
+      - search_tool
+      - scraping_tool
+      - file_read_tool  
+
+tasks:
+  - name: CreateDetailedPersona
+    description: >
+      Create a comprehensive persona for Persona Number {persona_number} based on the provided outline and information in the input files.
+      Include ALL of the following with rich, detailed descriptions:
+
+      1. Persona Number: Use the provided persona_number parameter ({persona_number})
+      2. Persona Name: A descriptive name that captures the essence of the persona.
+      3. Description: Comprehensive overview of characteristics, behaviors, and motivations.
+      4. Short Description: A tagline sentence that captures the essence of the persona, suitable for a preview card. No more than 15 words.
+      5. Psychographic Traits: 4-6 key traits with explanations.
+      6. Highlights: 4-6 key highlights (what does the job offer to the candidate that competitor jobs don't), maximum 5 words each.
+      7. Market Conditions: Analyze relevant job market factors.
+      8. Targeting Strategy:
+         - Demographic Targeting: Age group, education level, and rationale.
+         - Geographic Targeting: Target regions and rationale.
+         - Interest-Based Targeting: Relevant interests and rationale.
+         - Behavioral Targeting: Key behaviors and rationale.
+      9. Messaging Strategy:
+         - Ad Copy: Content and rationale.
+         - Value Proposition: List of value propositions and rationale.
+         - Call to Action: Content and rationale.
+         - Imagery and Visual Elements: Description and rationale.
+         - Tone and Style: Description and rationale.
+      10. Competitive Landscape:
+         - Overview: Analysis of the competitive environment.
+         - Strategic Positioning: Content and rationale.
+
+      Ensure the persona is richly detailed and builds upon the provided outline. Use data as a foundation and expand with plausible, detailed information. Leverage the following strategies when crafting the persona:
+      - Integrate context from all documents for a holistic understanding.
+      - Balance positives and negatives for authenticity.
+      - Align with demographic trends while ensuring diversity.
+      - Emphasize key value propositions in the persona narrative.
+      - Highlight competitive differentiation in decision-making processes.
+      - Map skills and experiences to job requirements.
+      - Address potential concerns based on employee sentiments.
+      - Consider varying levels of technology comfort.
+      - Align motivations with company core values.
+      - Suggest how the persona might respond to company branding.
+
+      Produce rich content in your response while adhering to the JSON structure.
+      Ensure that the output is in plain JSON format without any additional formatting.
+
+      Input files: 
+      - crew_io_files/brand_voice.json
+      - crew_io_files/candidate_demographics.json
+      - crew_io_files/competitor_analysis.json
+      - crew_io_files/job_analysis.json
+      - crew_io_files/employee_sentiment.json
+      - crew_io_files/persona_outlines.json (use the persona_number to select the specific outline)
+
+      *** CRITICAL: DON'T INCLUDE GENDER AND ETHNICITY INFORMATION OR JOB SEARCH CHANNEL INFORMATION FROM THE CANDIDATE DEMOGRAPHICS JSON ***
+
+    agent: Detailed Persona Creator
+    expected_output: |
+      Pure and plain JSON object with a single, richly detailed persona.
+      Ensure that the output is in plain JSON format without any additional formatting such as ```json notation.
+      Use the Persona Avatar ID value from the persona_outlines.json file for the specific persona.
+      {
+        "persona": {
+          "Persona Number": "integer",
+          "Persona Name": "string",
+          "Persona Avatar ID": "string",
+          "Description": "string",
+          "Short Description": "string",
+          "Psychographic Traits": {
+            "string": "string"
+          },
+          "Highlights": {
+            "string": "string"
+          },
+          "Market Conditions": "string",
+          "Targeting Strategy": {
+            "Demographic Targeting": {
+              "Age Group": "string",
+              "Education Level": "string",
+              "Rationale": "string"
+            },
+            "Geographic Targeting": {
+              "Target Regions": "string",
+              "Rationale": "string"
+            },
+            "Interest-Based Targeting": {
+              "Interests": "string",
+              "Rationale": "string"
+            },
+            "Behavioral Targeting": {
+              "Behaviors": "string",
+              "Rationale": "string"
+            }
+          },
+          "Messaging Strategy": {
+            "Ad Copy": {
+              "Content": "string",
+              "Rationale": "string"
+            },
+            "Value Proposition": {
+              "Content": ["string"],
+              "Rationale": "string"
+            },
+            "Call to Action": {
+              "Content": "string",
+              "Rationale": "string"
+            },
+            "Imagery and Visual Elements": {
+              "Content": "string",
+              "Rationale": "string"
+            },
+            "Tone and Style": {
+              "Content": "string",
+              "Rationale": "string"
+            }
+          },
+          "Competitive Landscape": {
+            "Overview": "string",
+            "Strategic Positioning": {
+              "Content": "string",
+              "Rationale": "string"
+            }
+          }
+        }
+      }
+    output_json: DetailedPersonaOutput

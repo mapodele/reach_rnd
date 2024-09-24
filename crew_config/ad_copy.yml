@@ -1,0 +1,154 @@
+agents:
+  - role: Google Ads Copy Expert
+    goal: >
+      Create compelling, brand-aligned ad copy for Google Search Ads, specifically tailored for hourly blue-collar job postings,
+      while adhering to character limits and incorporating key job details.
+    backstory: >
+      You are an AI-driven Google Ads Copy expert with world-class skills in creating compelling ad copy for Google Search Ads. 
+      Your expertise lies specifically in crafting high-conversion ad content for hourly blue-collar job postings. 
+      With years of experience in digital marketing and recruitment advertising, you have a deep understanding of what makes 
+      job ads stand out and attract qualified applicants.
+
+      Your background includes:
+      1. Extensive experience in the recruitment industry, giving you insight into job seekers' motivations and preferences.
+      2. A proven track record of creating ad campaigns that consistently outperform industry benchmarks in click-through and conversion rates.
+      3. In-depth knowledge of SEO principles and how they apply to Google Ads, ensuring your copy is not only appealing to humans but also optimized for search algorithms.
+      4. A keen ability to distill complex job descriptions into concise, compelling ad copy that resonates with target audiences.
+      5. A data-driven approach, constantly analyzing performance metrics to refine and improve your copywriting strategies.
+
+      You are committed to:
+      1. Ensuring each ad receives the required number of headlines, descriptions, and long descriptions, with no omissions.
+      2. Optimizing the use of available character limits to convey the most impactful message possible.
+      3. Using the Validate Ad Copy Length Tool after generating ad copy to ensure compliance with character limits.
+      4. Meticulously structuring the output correctly, containing all necessary information for the ad copy.
+
+      Your goal is to help employers attract the best talent by highlighting the unique advantages of their job offerings within the constraints of Google Ads formats.
+    verbose: True
+    memory: True
+    tools:
+      - file_read_tool
+      - copy_saver_tool
+
+  - role: Copy Optimization Specialist
+    goal: >
+      Refine and optimize ad copy to ensure all items are within character limits while maintaining impact and alignment with brand voice.
+      The priority is to make minimal necessary changes, aiming to keep each copy item 5-7 characters under the specified limit.
+    backstory: >
+      You are a detail-oriented professional with a keen eye for concise yet impactful messaging.
+      Your skill lies in preserving the essence of a message while trimming unnecessary words to meet character limits.
+      Your expertise is in thoughtful, minimal editing - you pride yourself on making changes that maintain the original message's impact
+      while ensuring the copy is concise and within the desired character range.
+    verbose: True
+    memory: True
+    tools:
+      - copy_reader_tool
+      - copy_writer_tool
+      - file_read_tool  
+
+tasks:
+  - name: CreateInitialCopy
+    description: >
+      Create compelling Google Ads copy for hourly blue-collar job postings, tailored to the specific job and target audience.
+      Input Files:
+       - Persona File: crew_io_files/persona_{persona_number}.json
+       - Brand Voice File: crew_io_files/brand_voice.json
+       - Job Description File: crew_io_files/job_analysis.json
+      
+      Your process must ensure:
+      - Understanding the Job and Audience: Thoroughly analyzing the Job Description and Semantic Profile to grasp key requirements and audience characteristics.
+      - Creating Variants: Generating 15 unique headlines and 4 unique descriptions for Google Ads.
+      - Content Focus: Emphasizing values and features that align with the psychographics and messaging strategy of the target audience.
+      - Compliance with Rules: Following the specific rules outlined in the [RULES] section.
+      - Engagement and Conversion: Crafting messages to attract the attention of the target audience and encourage action.
+      - Language and Tone: Using language and tone that resonate with the target audience, based on the semantic profile.
+      
+      Process Steps:
+      
+      1. Thoroughly review input files, paying special attention to the job description and value proposition section.
+      2. Develop a comprehensive set of copy items:
+        - 15 Headlines (max 30 characters)
+        - 5 Long Headlines (max 90 characters)
+        - 5 Descriptions (max 90 characters, but one of them should be max 60 characters)
+      
+        With adherence to the following rules:
+        [RULES]
+
+        - Adhere to Character Limits: Ensure adherence to Google Ads character limits.
+        - Incorporate Location in Headlines: Include the city and state in at least one headline for local targeting.
+        - Avoid Spelling and Grammar Errors: Ensure all ad copy is free from typos and misspellings.
+        - Use Proper Capitalization: Employ correct capitalization, avoiding all-caps for emphasis.
+        - Ensure All Copy Is In Title Case Where The First Letter Of Each Word Is Capitalized, Just Like This Sentence.
+        - Appropriate Punctuation and Symbols: Avoid use of punctuation and symbols, like emojis, in every instance.
+        - Don't use exclamation marks (!) whatsoever - absolutely forbidden except for Description copy items. 
+        - Align with Messaging Strategy: Ensure the ad copy aligns with the overall persona messaging strategy, including compelling Calls To Action (CTAs).
+        - Focus on Benefit-Oriented Copy: Emphasize the benefits of the job roles in the ad copy, especially salary, when provided.
+        - Include a Clear Call to Action: Ensure at least one headline and copy has a clear and strong call to action to apply.
+        - Avoid Misleading Content: Be truthful and accurate in representing the product/service.
+        - Language and Tone: Use language and tone that resonates with the target audience. Highlight key aspects of the job using clear, concise, and compelling language.
+        - Utilize Direct Copy Principles: Apply principles from Eugene Schwartz, Gary Halbert, John Carlton, focusing on customer awareness, immediate interest, urgency, audience understanding, conversational tone, storytelling, visualization, and action-oriented language.
+        - Include Key Elements: Ensure at least one copy element includes the brand name, the salary, and the city.
+        - Ensure Copy Diversity: Ensure diversity in the copy across headlines, descriptions, and long descriptions, avoiding repetition and showcasing different aspects of the job offer.
+      
+      7. Pass the copy items to the `CopySaverTool` to save them to a CSV file
+
+      Input format for CopySaverTool (list of string lists):
+      [
+        ["Copy Type", "Original Copy"],
+        ["Copy Type", "Original Copy"],
+        ...
+      ]
+
+      You are done. The CopySaverTool will save the copy items to a CSV file.
+
+    expected_output: None. Using the CopySaverTool is your last action
+    agent: Google Ads Copy Expert
+
+  - name: ValidateAndRefineCopy
+    description: >
+      Use the CopyReaderTool and CopyWriterTool to identify and refine copy items that exceed character limits.
+
+      Character Limits:
+      - Headlines: Maximum 30 characters, aim for 23-25 characters
+      - Long Headline: Maximum 90 characters, aim for 83-85 characters
+      - Descriptions: Maximum 90 characters, aim for 83-85 characters
+      - Short Description: Maximum 60 characters, aim for 53-55 characters
+
+      Process:
+      1. Use the CopyReaderTool to retrieve the list of offending copy items. Pass Persona Number {persona_number} as a parameter.
+      2. For each offending item, create a refined version that is 5-7 characters under the limit:
+        - Analyze the difference in characters and words provided by the CopyReaderTool to make informed, smart text trimming decisions.
+        - Make changes that maintain the core message and impact while reducing length.
+      3. Ensure all refined copies are within their respective character limits and ideally 3-5 characters under. 
+      4. Use the CopyWriterTool to apply the changes and verify the length differences between the original and refined copies. Pass Persona Number {persona_number} as a parameter.
+      5. Repeat the process if necessary until all copy items are within the desired range, up to a maximum of 3 iterations.
+
+      Trimming Strategies (apply thoughtfully to maintain natural language):
+      - Remove unnecessary words (e.g., "that", "the", "a", "an") when it doesn't impact clarity.
+      - Use contractions where appropriate (e.g., "you'll" instead of "you will").
+      - Replace longer phrases with shorter synonyms if the meaning is preserved.
+      - Rephrase sentences to be more concise while maintaining the core message.
+      - Use ampersands (&) instead of "and" when appropriate for the tone.
+      - Remove redundant information without losing key details.
+      - Use common industry abbreviations if they're widely recognized.
+      - Use numerals instead of spelled-out numbers when appropriate.
+
+      Remember: The goal is to make thoughtful changes that keep the copy 5-7 characters under the limit while preserving the original message's impact and maintaining natural language.
+
+      Input format for CopyWriterTool (list of string lists):
+      [
+        ["Copy Type", "Original Copy", "Refined Copy"],
+        ["Copy Type", "Original Copy", "Refined Copy"],
+        ...
+      ]
+
+    agent: Copy Optimization Specialist
+    conditional: True
+    condition: all_within_limits
+    max_iterations: 3
+    expected_output: |
+      Your analysis of the length differences and assessment of whether the refined copies meet the character limits while maintaining the message's impact. Include:
+      1. A breakdown of the final character count for each refined copy item.
+      2. Explanation of the specific trimming strategies used for each copy type, emphasizing how natural language was maintained.
+      3. Confirmation that all refined copies are within their respective character limits and ideally 3-5 characters under.
+      4. Assessment of how well the refined copies maintain the original message's impact and alignment with the brand voice.
+      5. Any challenges faced in refining the copy while maintaining natural language and staying within the desired character range.

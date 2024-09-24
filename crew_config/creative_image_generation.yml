@@ -1,0 +1,220 @@
+agents:
+  - role: Compliance-Focused Image Strategist
+    goal: >
+      Conceptualize and describe highly targeted, persona-specific, and fully compliant image concepts 
+      for recruitment advertising. These concepts should result in visuals that deeply resonate 
+      with the ideal candidate as defined by the AI-generated marketing persona, 
+      optimized specifically for Facebook ad campaigns, while strictly adhering to all Facebook 
+      advertising policies and guidelines, and never including any text, logos, or mentions 
+      of the specific brand or company advertising the job. Additionally, incorporate subtle brand elements
+      and company culture indicators without explicitly mentioning the brand name or using logos.
+    backstory: >
+      You are an expert AI system within the Reach platform, specializing in 
+      translating complex marketing personas and job descriptions into vivid, engaging, 
+      and fully compliant visual concepts. Your deep understanding of psychographics, 
+      candidate motivations, Facebook ad best practices, and Facebook's strict advertising policies 
+      allows you to craft image concepts that speak directly to the ideal candidate's aspirations and values 
+      while ensuring full compliance with Facebook's platform guidelines. Your expertise in visual marketing, 
+      advertising compliance, and brand representation ensures that every concept you create 
+      is not only compelling but also adheres to the strictest interpretation of Facebook's ad policies. 
+      You are acutely aware of the need to create concepts that are universally appealing and compliant, 
+      without referencing specific brands or employers in the visual concepts themselves. You strictly avoid 
+      including any text, logos, or brand-specific elements in your image concepts. However, you are skilled
+      at subtly conveying the essence of the brand through careful use of symbolism, color schemes, and
+      environmental cues that align with the company's culture and values.
+    verbose: True
+    memory: False
+
+  - role: Midjourney Prompt Engineer
+    goal: >
+      Transform compliant image concepts into highly optimized, photorealistic Midjourney prompts 
+      that accurately represent the original concept while maximizing the quality and realism 
+      of the generated image. Ensure that the final prompt adheres to all compliance guidelines 
+      established in the original concept, particularly avoiding any specific brand or employer references.
+    backstory: >
+      You are a technical expert in AI image generation, particularly specialized in Midjourney. 
+      Your extensive knowledge of prompt engineering techniques, combined with a deep understanding 
+      of photography, cinematography, and visual arts, allows you to craft prompts that consistently 
+      produce stunning, photorealistic results. You have a keen eye for detail and a thorough 
+      understanding of how different prompt elements and technical parameters affect the final image. 
+      Your role is crucial in translating conceptual ideas into technical instructions that Midjourney 
+      can interpret to create the desired visual output. You are also highly skilled at maintaining 
+      the compliance and brand-neutral aspects of the original concept throughout the prompt engineering process.
+    verbose: True
+    memory: False
+
+tasks:
+  - name: GenerateCompliantImageConcept
+    description: >
+      Your task is to create a detailed, Facebook-compliant image concept based on the provided 
+      job description and marketing persona. This concept will serve as the foundation for 
+      a Midjourney prompt. Follow these steps meticulously:
+
+      1. Thoroughly analyze the marketing persona file, paying special attention to:
+         - Psychographic traits (e.g., personality characteristics, values, attitudes, interests, and lifestyles)
+         - Motivations and values (both personal and professional)
+         - Career aspirations (short-term and long-term goals)
+         - Lifestyle preferences (work-life balance, work environment preferences, etc.)
+
+      2. Review the job description to understand the role's key aspects, including:
+         - Primary responsibilities (day-to-day tasks, key performance indicators)
+         - Required skills and qualifications (technical skills, soft skills, education, experience)
+         - Company culture and values (without explicitly naming the company)
+         - Any unique aspects of the position (e.g., travel opportunities, innovative projects, career growth potential)
+
+      3. Review the brand guidelines and company information, noting:
+         - Brand values and mission statement
+         - Company culture and work environment
+         - Visual identity elements (color schemes, imagery styles, etc.)
+         - Unique selling propositions or differentiators
+
+      4. Conceptualize a scene that would resonate strongly with the persona and subtly represent the brand, considering:
+         - Setting (e.g., modern office with subtle brand color accents, outdoor workspace reflecting company values)
+         - Characters (e.g., diverse team embodying company culture, professionals whose appearance aligns with brand image)
+         - Activities (e.g., problem-solving using company's unique approach, teamwork reflecting corporate values)
+         - Symbolic elements that represent career growth, personal fulfillment, and brand identity (e.g., objects or layouts that hint at company's industry or values)
+
+      5. Ensure the concept strictly adheres to Facebook ad guidelines by avoiding all prohibited content, including:
+         - Depictions of firearms or weapons
+         - Explicit imagery of violence or gore
+         - Sexually suggestive or explicit content
+         - Nudity or partial nudity
+         - Discriminatory content based on protected characteristics (race, ethnicity, color, national origin, religion, age, sex, sexual orientation, gender identity, family status, disability, medical or genetic condition)
+         - Profanity or offensive language
+         - Depictions of illegal activities
+         - Images that could be interpreted as bullying or harassment
+         - Graphic depictions of medical conditions or procedures
+         - Content that promotes or glorifies drug use
+         - Imagery that could be seen as exploiting crises or controversial events
+         - Depictions of unsafe practices or dangerous situations
+         - Imagery that infringes on third-party intellectual property
+         - Shocking or excessively violent content
+         - Depictions of self-harm or suicide
+         - Content that could be interpreted as hate speech
+         - Imagery that violates personal privacy
+         - Depictions of tobacco use or vaping
+         - Content that could be seen as spreading misinformation
+         - Imagery that promotes illegal products or services
+         - Any text, logos, brand names, or company-specific identifiers
+
+      6. Craft a detailed description of the image concept, including:
+         - Overall composition and framing (e.g., rule of thirds, golden ratio, leading lines)
+         - Lighting and atmosphere (e.g., bright and airy, warm and inviting, professional and focused)
+         - Character descriptions (appearance, expressions, body language, clothing style that subtly aligns with brand image)
+         - Environmental details (office layout, outdoor elements, technology present that hints at company's industry)
+         - Color palette and visual elements that subtly reflect the brand's identity
+         - Any graphical elements to be included (ensure these are minimal, compliant, and do not include any text or explicit brand-specific elements)
+
+      7. Provide a comprehensive rationale for your concept, explaining:
+         - How it aligns with the persona's psychographic profile (connect specific elements to persona traits)
+         - How it subtly incorporates elements related to the job role and company culture (without explicit branding)
+         - How it creates an aspirational image that the ideal candidate would be drawn to
+         - How it ensures full compliance with Facebook ad guidelines (address each relevant guideline)
+         - How it subtly conveys the essence of the brand without explicit identification
+
+      Remember to focus on creating concepts that showcase the professional, community-focused,
+      and supportive aspects of the job, while hinting at the unique qualities of the employer. 
+      Avoid including any specific brand names, company logos, text, or overtly identifiable company-specific elements in your concept.
+
+      Persona File: crew_io_files/persona_1.json
+      Brand Voice File: crew_io_files/brand_voice.json
+      Job Description File: crew_io_files/job_analysis.json
+
+    agent: Compliance-Focused Image Strategist
+    expected_output: |
+      Please provide your output in the following format:
+
+      Image Concept:
+      [Provide an extremely detailed description of the proposed image, covering all aspects mentioned in the task description. Be specific about visual elements, character appearances, setting details, and overall composition, including subtle brand-aligned elements.]
+
+      Rationale:
+      Persona Alignment:
+      - [Provide at least 5 detailed points explaining how the concept aligns with key psychographic traits]
+      - [Offer at least 5 specific examples of how the image would appeal to the persona's motivations and values]
+
+      Job Role and Brand Integration:
+      - [Describe at least 5 ways the concept incorporates aspects of the job role and company culture without explicit branding]
+      - [Explain how each element subtly communicates the nature of the work, company culture, and brand essence]
+      - [Detail how the color palette, symbolism, or environmental cues align with the brand's identity]
+
+      Aspirational Impact:
+      - [Provide at least 5 detailed points on how the concept creates an aspirational feel for the ideal candidate]
+      - [Explain the psychological impact of specific visual elements on the target audience]
+
+      Compliance Check:
+      - [Confirm in detail how the concept adheres to each relevant Facebook ad guideline]
+      - [Explain thoroughly how all prohibited elements are avoided, addressing each point in the guidelines]
+      - [Describe how the concept positively represents the job and company culture without violating any guidelines or including explicit brand-specific elements]
+
+      Visual Execution:
+      - [Provide detailed guidance on how the image should be composed, including specific notes on framing, color palette, and visual hierarchy]
+      - [Describe the ideal lighting setup and atmosphere to achieve the desired mood and subtle brand alignment]
+      - [Offer specific suggestions for character positioning, expressions, and interactions to convey the intended message and company culture]
+
+    output_file: crew_io_files/compliant_image_concept.md
+
+  - name: CreateOptimizedMidjourneyPrompt
+    description: >
+      Your task is to transform the compliant image concept provided by the Compliance-Focused Image Strategist 
+      into a highly optimized Midjourney prompt. This prompt should accurately represent the original concept 
+      while maximizing the quality and realism of the generated image. Follow these steps meticulously:
+
+      1. Carefully review the provided image concept, paying close attention to:
+         - Overall composition and framing
+         - Lighting and atmosphere
+         - Character descriptions (appearance, expressions, body language)
+         - Environmental details
+         - Any specific elements or symbols mentioned
+         - The rationale behind each aspect of the concept
+
+      2. Translate the concept into a Midjourney prompt, using advanced prompting techniques:
+         - Be Specific: Use precise descriptions to match the vision, e.g., instead of "office," use "modern open-plan office with glass partitions and ergonomic workstations"
+         - Use Keywords: Incorporate relevant keywords to guide Midjourney's understanding, e.g., "professional," "collaborative," "innovative"
+         - Use Adjectives and Adverbs: Add detail and specificity to your prompt, e.g., "confidently presenting," "attentively listening," "seamlessly integrating"
+         - Use Relevant Style Keywords: Include appropriate style keywords if a specific style is desired, e.g., "corporate photography style," "lifestyle business imagery"
+         - Aim for Realism: Use keywords like "photorealistic," "hyperdetailed," and "lifelike" to enhance realism
+         - Brevity vs. Detail: Focus on core ideas without using convoluted sentences, but include enough detail for accuracy
+         - Word Choice: Opt for specific synonyms to enhance each word's influence, e.g., "beaming" instead of "smiling," "state-of-the-art" instead of "modern"
+         - Punctuation and Syntax: Use commas, brackets, and hyphens to organize thoughts and emphasize certain elements
+
+      3. Incorporate specific camera and lens details to enhance realism, such as:
+         - Camera models (e.g., "shot on Sony α7 III," "captured with Nikon D850," "Canon EOS R5 photography")
+         - Lens focal lengths (e.g., "35mm street photography style," "85mm portrait lens," "wide-angle 16mm view")
+         - Aperture settings (e.g., "shallow depth of field at f/1.4," "everything in focus at f/8," "bokeh effect at f/2.8")
+
+      4. Optimize lighting and mood descriptions, using terms like:
+         - "soft, diffused natural light streaming through large windows"
+         - "dramatic side-lighting creating depth and dimension"
+         - "cinematic lighting with a subtle blue-orange color contrast"
+         - "warm, inviting ambient lighting that highlights key areas"
+         - "global illumination providing even, flattering light on all subjects"
+
+      5. Refine details and realism by adding technical terms such as:
+         - "8K resolution," "HDR imaging," "photogrammetry-based environment"
+         - "ray-traced global illumination," "physically-based rendering (PBR) materials"
+         - "volumetric lighting," "subsurface scattering on skin"
+         - "high-fidelity 3D models," "motion-captured poses for natural movement"
+
+      6. Specify subject poses, angles, and framing, e.g.:
+         - "medium close-up shot, subject facing three-quarters towards camera"
+         - "wide-angle view capturing the entire office space from a slight elevated angle"
+         - "over-the-shoulder perspective of the presenter, audience in soft focus"
+
+      7. Mandatory Midjourney parameters:
+         - Aspect ratio: --ar 1:1
+         - Stylization: --stylize 1000
+
+      Ensure that your prompt maintains the compliance standards set in the original concept 
+      while optimizing for photorealistic and high-quality image generation. Do not include any 
+      brand-specific elements, company names, logos, or text in the prompt. The final image should 
+      not contain any readable text or identifiable brand elements.
+
+      Lastly, you must be as concise as possible, while still conveying the necessary information for the image generation. Do not exceed 800 characters in length in your prompt.
+
+    agent: Midjourney Prompt Engineer
+    context: GenerateCompliantImageConcept
+
+    expected_output: |
+      Midjourney prompt text only, without any additional explanation or rationale. The prompt must not exceed 800 characters in length. The prompt should be a single, detailed paragraph incorporating all the elements discussed in the task description, followed by the necessary Midjourney parameters. 
+      The prompt must absolutely not contain any of the following words ["Blood","Bloodbath","Crucifixion","Bloody","Flesh","Bruises","Car crash","Corpse","Crucified","Cutting","Decapitate","Infested","Gruesome","Kill","Infected","Sadist","Slaughter","Teratoma","Tryphophobia","Wound","Cronenberg","Khorne","Cannibal","Cannibalism","Visceral","Guts","Bloodshot","Gory","Killing","Surgery","Vivisection","Massacre","Hemoglobin","Suicide","ahegao","pinup","ballgag","Playboy","Bimbo","pleasure","pleasures","bodily fluids","boudoir","rule34","brothel","seducing","seductive","erotic seductive","fuck","sensual","Hardcore","sexy","Hentai","Shag","horny","shibari","incest","Smut","jav","succubus","Jerk off king at pic","thot","kinbaku","transparent","legs spread","twerk","making love","voluptuous","naughty","wincest","orgy","Sultry","XXX","Bondage","Bdsm","Dog collar","Slavegirl","Transparent and Translucent","Arse","Labia","Ass","Mammaries","Human centipede","Badonkers","Minge","Massive chests","Big Ass","Mommy Milker","Booba","Nipple","Booty","Oppai","Bosom","Organs","Breasts","Ovaries","Busty","Penis","Phallus","Crotch","Dick","Girth","Honkers","Vagina","Hooters","Veiny","Knob","no clothes","Speedo","au naturale","no shirt","bare chest","barely dressed","bra","clear","scantily clad","cleavage","stripped","full frontal unclothed","invisible clothes","wearing nothing","lingerie with no shirt","nude","naked","without clothes on","negligee","zero clothes","Torture","Disturbing","Farts","Poop","Warts","Shit","Pleasure","Errect","Big Black","Brown pudding","Bunghole","Vomit","Hot","Sensored","Censored","Silenced","Deepfake","Inappropriate","Pus","Waifu","mp5","1488"]
+    output_file: crew_io_files/optimized_midjourney_prompt.md

@@ -1,0 +1,142 @@
+pydantic_models:
+  - name: JobPostingData
+    fields:
+      job_title: str
+      job_posting_url: str
+      company_name: str
+      location: str
+      job_description: str
+      required_qualifications: "List[str]"
+      preferred_qualifications: "List[str]"
+      responsibilities: "List[str]"
+      benefits: "List[str]"
+      unique_aspects: "List[str]"
+
+  - name: JobBLSAnalysisReport
+    fields:
+      job_description: JobPostingData
+      onet_data:
+        job_category: str
+        required_skills: "List[str]"
+        job_outlook: str
+        median_pay: str
+        educational_requirements: str
+      company_information:
+        company_name: str
+        description: str
+        core_values: "List[str]"
+        leadership: "List[str]"
+      job_comparison: "List[Dict[str, str]]"
+      value_propositions: "List[Dict[str, str]]"
+
+
+agents:
+  - role: Job Analysis and Labor Market Expert
+    goal: >
+      Your primary tasks are to extract comprehensive information from job postings and
+      provide a detailed analysis using O*NET and other labor statistics. You will analyze
+      job descriptions, research similar positions, identify unique selling points, and
+      provide insights on job market trends and comparisons.
+    backstory: >
+      You are an expert in both job analysis and labor market trends, with years of experience
+      in the recruitment industry and workforce development. Your keen eye for detail allows
+      you to quickly identify key aspects of job postings, while your knowledge of labor
+      statistics and O*NET data enables you to provide comprehensive market insights.
+      Your expertise helps companies attract the best talent and understand their position
+      in the job market.
+    verbose: True
+    memory: True
+    tools:
+      - search_tool
+      - scraping_tool
+      - file_read_tool  
+
+tasks:
+  - name: ExtractJobDetails
+    description: >
+      Your task is to analyze the provided job opening URL. You will:
+      1. Extract all relevant information from the job posting, including job title, job posting url ({job_url}) company name, location, job description in full, qualifications, responsibilities, benefits, and unique aspects.
+      2. Organize the extracted information into a structured format.
+      3. Identify any unique or standout aspects of the job posting that might be valuable for persona creation.
+      4. Ensure that all extracted data is accurate and comprehensive, as it will be used for further analysis and persona creation.
+      5. Ensure that the output is in plain JSON format without any additional formatting, such as ```json notation.
+
+      Job URL: {job_url}
+    agent: Job Analysis and Labor Market Expert
+    expected_output: |
+      JSON object (without any additional formatting, such as ```json notation.) with the following fields:
+      {
+        "job_title": "string",
+        "job_posting_url": "string",
+        "company_name": "string",
+        "location": "string",
+        "job_description": "string",
+        "required_qualifications": ["string"],
+        "preferred_qualifications": ["string"],
+        "responsibilities": ["string"],
+        "benefits": ["string"],
+        "unique_aspects": ["string"]
+      }
+    output_json: JobPostingData
+
+  - name: GenerateBLSAnalysis
+    description: >
+      Your task is to use the job description you've just extracted and perform comprehensive research using O*NET and other labor statistics. You will:
+      1. Use the job description from the ExtractJobDetails task.
+      2. Use O*NET to find the closest job category and gather data on required skills, job outlook, median pay, and educational requirements.
+      3. Search online for additional information about the job and the company.
+      4. Compare the job with similar positions from other companies to identify key trends and insights.
+      5. Identify and highlight five key value propositions based on the gathered data.
+      6. Ensure that the output is in plain JSON format without any additional formatting, such as ```json notation.
+
+      Job URL: {job_url}
+    agent: Job Analysis and Labor Market Expert
+    expected_output: |
+      JSON file with the following fields:
+      Ensure that the output is in plain JSON format without any additional formatting, such as ```json notation.
+      {
+        "job_description": {
+          "job_title": "string",
+          "job_posting_url": "string",
+          "company_name": "string",
+          "location": "string",
+          "job_description": "string",
+          "required_qualifications": ["string"],
+          "preferred_qualifications": ["string"],
+          "responsibilities": ["string"],
+          "benefits": ["string"],
+          "unique_aspects": ["string"]
+        },
+        "onet_data": {
+          "job_category": "string",
+          "required_skills": ["string"],
+          "job_outlook": "string",
+          "median_pay": "string",
+          "educational_requirements": "string"
+        },
+        "company_information": {
+          "company_name": "string",
+          "description": "string",
+          "core_values": ["string"],
+          "leadership": ["string"]
+        },
+        "job_comparison": [
+          {
+            "title": "string",
+            "company": "string",
+            "location": "string",
+            "salary": "string",
+            "description": "string"
+          }
+        ],
+        "value_propositions": [
+          {
+            "value_proposition": "string",
+            "detail": "string"
+          }
+        ]
+      }
+    output_json: JobBLSAnalysisReport
+    output_file: job_analysis.json
+    context:
+      - ExtractJobDetails

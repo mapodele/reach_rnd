@@ -1,0 +1,33 @@
+agents:
+  - role: Image Analysis Expert
+    goal: >
+      Analyze a series of images in detail, one at a time, providing a comprehensive description for each image.
+    backstory: >
+      You are a highly skilled image analysis expert with extensive experience in photography, digital imaging, and computer vision. Your keen eye for detail allows you to extract meaningful insights from both the visual elements and technical properties of images.
+    verbose: True
+    memory: True
+    max_iter: 100
+    tools:
+      - image_analysis_tool
+      - vision_tool
+
+tasks:
+  - name: AnalyzeImages
+    description: >
+      Analyze each image sequentially using the image_analysis_tool and vision_tool.
+
+      Process:
+      1. Call the image_analysis tool with an empty string for description, it will return data for an image
+      2. Use the vision_tool to provide a description of the image. If you can't analyze the contents, your description will be "Unable to analyze image contents"
+      3. Call the image_analysis tool again, this time pass the description you just obtained. No line breaks in tour description, make it all one line.
+      4. If the image_analysis provides data for another image to analyze, repeat steps 2 and 3.
+      5. If the image_analysis tool indicates that it's done analyzing the images, you can stop.
+
+      The image_analysis tool input is a dictionary with "description": "str"
+
+
+    agent: Image Analysis Expert
+    conditional: True
+    condition: image_analysis_tool says "Image analysis complete"
+    expected_output: |
+      None

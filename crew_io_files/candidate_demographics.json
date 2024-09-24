@@ -1,0 +1,62 @@
+{
+  "job_title": "Assistant Store Manager",
+  "company_name": "True Religion",
+  "demographic_segments": [
+    {
+      "segment_name": "Experienced Retail Managers",
+      "age_range": "30-50",
+      "gender_distribution": "65% female, 35% male",
+      "education_level": "High school diploma or equivalent; some college preferred",
+      "experience_level": "3-5 years in retail management",
+      "location_preferences": "Urban areas with high foot traffic",
+      "job_search_channels": [
+        "LinkedIn",
+        "Indeed"
+      ],
+      "common_preferences": [
+        "Opportunities for career advancement",
+        "Brand recognition"
+      ]
+    },
+    {
+      "segment_name": "Young Aspiring Managers",
+      "age_range": "25-35",
+      "gender_distribution": "58% male, 42% female",
+      "education_level": "Bachelor's degree",
+      "experience_level": "1-3 years in retail or related fields",
+      "location_preferences": "Dynamic urban environments",
+      "job_search_channels": [
+        "LinkedIn",
+        "Greenhouse"
+      ],
+      "common_preferences": [
+        "Leadership training",
+        "Innovative work culture"
+      ]
+    },
+    {
+      "segment_name": "Diverse Ethnic Backgrounds",
+      "age_range": "25-45",
+      "gender_distribution": "Balanced",
+      "education_level": "High school diploma or equivalent",
+      "experience_level": "2-4 years in customer service or retail",
+      "location_preferences": "Culturally diverse urban areas",
+      "job_search_channels": [
+        "ADP",
+        "Indeed"
+      ],
+      "common_preferences": [
+        "Cultural inclusivity",
+        "Community engagement"
+      ]
+    }
+  ],
+  "overall_insights": "The Assistant Store Manager role at True Religion attracts a diverse range of candidates, predominantly from urban areas, with a significant representation of women. Candidates are generally looking for career growth opportunities and value brand reputation. There is also a notable interest from younger demographics aspiring to develop their management skills in a reputable retail environment.",
+  "data_sources": [
+    "CareerExplorer",
+    "LinkedIn",
+    "Indeed",
+    "Greenhouse",
+    "ADP"
+  ]
+}

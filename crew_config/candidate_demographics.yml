@@ -1,0 +1,80 @@
+pydantic_models:
+  - name: DemographicSegment
+    fields:
+      segment_name: str
+      age_range: str
+      gender_distribution: str
+      education_level: str
+      experience_level: str
+      location_preferences: str
+      job_search_channels: "List[str]"
+      common_preferences: "List[str]"
+
+  - name: CandidateDemographicsReport
+    fields:
+      job_title: str
+      company_name: str
+      demographic_segments: "List[DemographicSegment]"
+      overall_insights: str
+      data_sources: "List[str]"
+
+agents:
+  - role: Demographics Analyst
+    goal: >
+      Your primary task is to identify and analyze multiple target candidate demographic segments 
+      using various online data sources. You will analyze demographic data for similar roles, 
+      identify common preferences and job search behavior across different segments, and provide 
+      a comprehensive report with insights for each identified segment.
+    backstory: >
+      You are an experienced demographics analyst with a background in HR and workforce development.
+      Your expertise helps companies understand the diverse target audiences for their job postings,
+      leading to better and more inclusive recruitment strategies. You use advanced data analytics 
+      tools and online resources to gather comprehensive data and insights, ensuring that your 
+      analysis is thorough, informative, and considers multiple demographic segments.
+    verbose: True
+    memory: True
+    tools:
+      - search_tool
+      - scraping_tool
+      - file_read_tool      
+    
+
+tasks:
+  - name: AnalyzeCandidateDemographics
+    description: >
+      Your task is to identify and analyze multiple target candidate demographic segments and their preferences. You will:
+      1. Use the provided job analysis json to understand the job context and company.
+      2. Analyze demographic data for similar roles using online data sources, EXCEPT ZIPPIA NEVER GO TO ZIPPIA including Indeed, Greenhouse, LinkedIn, and ADP 
+      3. Identify at least 3 distinct demographic segments that are likely to be interested in or qualified for the role.
+      4. For each segment, determine common preferences, job search behavior, and other relevant characteristics.
+      5. Provide overall insights that span across all identified segments.
+      6. Organize this information into a structured format exactly matching the expected output structure.
+
+      Ensure that the output is in plain JSON format without any additional formatting, such as ```json notation.
+      Use lowercase with underscores for all keys in the JSON output.
+
+      Input file: crew_io_files/job_analysis.json
+    expected_output: >
+      A JSON object containing the candidate demographics report, structured as follows:
+      {
+        "job_title": "string",
+        "company_name": "string",
+        "demographic_segments": [
+          {
+            "segment_name": "string",
+            "age_range": "string",
+            "gender_distribution": "string",
+            "education_level": "string",
+            "experience_level": "string",
+            "location_preferences": "string",
+            "job_search_channels": ["string"],
+            "common_preferences": ["string"]
+          }
+        ],
+        "overall_insights": "string",
+        "data_sources": ["string"]
+      }
+
+    agent: Demographics Analyst
+    output_json: CandidateDemographicsReport
+    output_file: candidate_demographics.json

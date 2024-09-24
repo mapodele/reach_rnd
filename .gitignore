@@ -1,0 +1,5 @@
+.env
+credentials
+__pycache__
+google-ads-india.yaml
+google-ads.yaml

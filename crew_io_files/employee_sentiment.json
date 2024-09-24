@@ -1,0 +1,50 @@
+{
+  "job_title": "Assistant Store Manager",
+  "company_name": "True Religion",
+  "employee_reviews": [
+    {
+      "platform": "Glassdoor",
+      "pros": [
+        "Laid back environment",
+        "Great growth opportunities",
+        "Good pay and employee benefits"
+      ],
+      "cons": [
+        "Company undergoing a lot of changes affecting jobs",
+        "Low commission",
+        "High expectations with no growth or hours"
+      ],
+      "overall_sentiment": "Mixed"
+    },
+    {
+      "platform": "Indeed",
+      "pros": [
+        "Enjoyable culture",
+        "Freedom to manage",
+        "Respectful management",
+        "Employee gatherings"
+      ],
+      "cons": [
+        "High turnover rate",
+        "Unorganized store management",
+        "Low bonus structure",
+        "Lack of corporate support"
+      ],
+      "overall_sentiment": "Mixed"
+    }
+  ],
+  "social_media_insights": [
+    {
+      "platform": "Twitter",
+      "positive_points": [
+        "Collaborative culture",
+        "Innovative and reinventive work environment"
+      ],
+      "negative_points": [
+        "Concerns about job security and growth opportunities"
+      ],
+      "overall_sentiment": "Mixed"
+    }
+  ],
+  "community_forum_insights": []
+}

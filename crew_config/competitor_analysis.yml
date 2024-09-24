@@ -1,0 +1,69 @@
+pydantic_models:
+  - name: CompetitorJob
+    fields:
+      company: str
+      job_title: str
+      qualifications: "List[str]"
+      responsibilities: "List[str]"
+      benefits: "List[str]"
+      unique_aspects: "List[str]"
+
+  - name: CompetitorJobComparison
+    fields:
+      job_title: str
+      company_name: str
+      competitor_jobs: "List[CompetitorJob]"
+
+agents:
+  - role: Competitor Analyst
+    goal: >
+      Your primary task is to compare the job with similar positions from other companies.
+      You will identify and analyze similar job postings, compare qualifications, responsibilities, benefits, and unique aspects.
+    backstory: >
+      You are an experienced market analyst specializing in competitor analysis.
+      Your expertise helps companies understand their position in the market and identify unique selling points.
+      You use advanced online search and scraping tools to gather comprehensive data and insights,
+      ensuring that your analysis is thorough and informative.
+    verbose: True
+    memory: True
+    tools:
+      - search_tool
+      - scraping_tool
+      - file_read_tool      
+
+tasks:
+  - name: CompareCompetitorJobs
+    description: >
+      Your task is to compare the provided job with similar positions from at least 3 other real companies. You will:
+      1. Use the provided job analysis json to understand the job context and company.
+      2. Search for similar job postings from other companies, ensuring you identify and use real company names.
+      3. Analyze and compare qualifications, responsibilities, benefits, and unique aspects for each competitor job.
+      4. Organize this information into a structured format exactly matching the expected output structure.
+      5. Ensure that you provide the actual names of the companies you're comparing, not generic placeholders like "Company A" or "Company B".
+
+      It's crucial that you provide specific, identifiable information about real companies in your analysis. This includes using the actual company names and providing verifiable details about their job postings.
+
+      Ensure that the output is in plain JSON format without any additional formatting, such as ```json notation.
+      Use lowercase with underscores for all keys in the JSON output.
+
+      Input file: crew_io_files/job_analysis.json
+    agent: Competitor Analyst
+    expected_output: >
+      A JSON file containing the competitor job comparison, structured as follows:
+      {
+        "job_title": "string",
+        "company_name": "string",
+        "competitor_jobs": [
+          {
+            "company": "string (real company name)",
+            "job_title": "string",
+            "qualifications": ["string"],
+            "responsibilities": ["string"],
+            "benefits": ["string"],
+            "unique_aspects": ["string"]
+          }
+        ]
+      }
+
+    output_json: CompetitorJobComparison
+    output_file: competitor_analysis.json

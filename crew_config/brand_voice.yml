@@ -1,0 +1,121 @@
+pydantic_models:
+  - name: CompanyBrandResearch
+    fields:
+      company_name: str
+      website_url: str
+      social_media_profiles: "List[str]"
+      key_themes: "List[str]"
+      brand_values: "List[str]"
+      communication_style: str
+      unique_aspects: "List[str]"
+
+  - name: BrandVoiceDocument
+    fields:
+        brand_essence: str
+        tone: "Dict[str, str]"
+        key_messaging: "List[Dict[str, str]]"  # Changed from List[str] to List[Dict[str, str]]
+        examples: "Dict[str, str]"
+        visual_elements: "Dict[str, str]"
+        voice_consistency: str
+        application: "Dict[str, str]"
+
+agents:
+  - role: Brand Voice Analyst
+    goal: >
+      Your primary tasks are to analyze the company's public communications and create a 
+      comprehensive brand voice document. This document will guide the internal marketing 
+      department in maintaining a consistent and engaging brand voice.
+    backstory: >
+      You are an experienced brand strategist with a background in marketing and communications.
+      You have a talent for distilling a company's essence into clear, actionable guidelines
+      for brand voice. Your work ensures that all company communications are consistent,
+      engaging, and true to the brand's values and personality.
+    verbose: True
+    memory: True
+    tools:
+      - search_tool
+      - scraping_tool
+      - file_read_tool  
+
+tasks:
+  - name: ResearchCompanyBrand
+    description: >
+      Your task is to analyze the provided job analysis json and research the brand communications for the company responsible for the job posting.
+      You will:
+      1. Extract all relevant information from the company's website, social media profiles, and other public communications.
+      2. Identify key themes, values, and unique aspects of the brand's voice.
+      3. Analyze the company's tone, messaging, and overall communication style.
+      4. Ensure that all extracted data is accurate and comprehensive, as it will be used for further analysis and brand voice creation.
+      5. Ensure that the output is in plain JSON format without any additional formatting, such as ```json notation.
+
+      Input file: crew_io_files/job_analysis.json
+    agent: Brand Voice Analyst
+    expected_output: |
+      JSON object with the following fields:
+      {
+        "company_name": "string",
+        "website_url": "string",
+        "social_media_profiles": ["string"],
+        "key_themes": ["string"],
+        "brand_values": ["string"],
+        "communication_style": "string",
+        "unique_aspects": ["string"]
+      }
+    output_json: CompanyBrandResearch
+
+  - name: GenerateBrandVoiceDocument
+    description: >
+      Your task is to use the company brand research you've just conducted and create a comprehensive brand voice document. You will:
+      1. Use the research data from the ResearchCompanyBrand task.
+      2. Create a brand voice document that includes:
+         - Brand Essence
+         - Tone (with descriptions for key attributes like empowering, flexible, supportive, professional)
+         - Key Messaging (with examples)
+         - Examples of copy for different contexts (website, social media, internal communications)
+         - Visual Elements (color palette, imagery style, typography guidelines)
+         - Voice Consistency guidelines
+         - Application examples (for training materials, recruitment, etc.)
+      3. Ensure that the output is in plain JSON format without any additional formatting, such as ```json notation.
+
+    agent: Brand Voice Analyst
+    expected_output: |
+      JSON object with the following fields:
+      {
+        "brand_essence": "string",
+        "tone": {
+          "attribute1": "string",
+          "attribute2": "string",
+          "attribute3": "string",
+          "attribute4": "string"
+        },
+        "key_messaging": [
+          {
+            "message": "string"
+          },
+          {
+            "message": "string"
+          },
+          {
+            "message": "string"
+          }
+        ],
+        "examples": {
+          "website": "string",
+          "social_media": "string",
+          "internal_communications": "string"
+        },
+        "visual_elements": {
+          "color_palette": "string",
+          "imagery_style": "string",
+          "typography_guidelines": "string"
+        },
+        "voice_consistency": "string",
+        "application": {
+          "training_materials": "string",
+          "recruitment": "string"
+        }
+      }
+    output_json: BrandVoiceDocument
+    output_file: brand_voice.json
+    context:
+      - ResearchCompanyBrand

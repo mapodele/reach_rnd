@@ -1,0 +1,98 @@
+pydantic_models:
+  - name: EmployeeReview
+    fields:
+      platform: str
+      pros: "List[str]"
+      cons: "List[str]"
+      overall_sentiment: str
+
+  - name: SocialMediaInsight
+    fields:
+      platform: str
+      positive_points: "List[str]"
+      negative_points: "List[str]"
+      overall_sentiment: str
+
+  - name: CommunityForumInsight
+    fields:
+      forum_name: str
+      positive_points: "List[str]"
+      negative_points: "List[str]"
+      overall_sentiment: str
+
+  - name: EmployeeSentimentAndSocialInsightsReport
+    fields:
+      job_title: str
+      company_name: str
+      employee_reviews: "List[EmployeeReview]"
+      social_media_insights: "List[SocialMediaInsight]"
+      community_forum_insights: "List[CommunityForumInsight]"
+
+agents:
+  - role: Sentiment and Social Media Analyst
+    goal: >
+      Your primary task is to analyze employee reviews and sentiment about the job and the company from various online platforms like Glassdoor, Indeed, Reddit, and other employment forums. 
+      Additionally, gather insights from social media platforms (e.g., Twitter, Facebook, LinkedIn) and community forums relevant to the job. You will read the reviews, summarize common pros and cons, identify overall sentiment, and extract key insights and trends from social discussions.
+    backstory: >
+      You are an experienced HR and social media analyst with a deep understanding of employee sentiment analysis and online community engagement.
+      Your expertise helps companies understand their strengths and weaknesses from an employee perspective,
+      as well as gauge public perception and trends. You use advanced online search and scraping tools
+      to gather comprehensive data and insights, ensuring that your analysis is thorough and informative.
+    max_iter: 2
+    verbose: True
+    memory: True
+    tools:
+      - search_tool
+      - scraping_tool
+      - file_read_tool      
+
+tasks:
+  - name: AnalyzeEmployeeSentimentAndSocialInsights
+    description: >
+      Your task is to analyze employee reviews and sentiment about the job and the company, and gather insights from social media and community forums. You will:
+      1. Understand the job context and company from the provided job analysis json.
+      2. Search for employee reviews on platforms like Glassdoor, Indeed, and other employment forums.
+      3. Search for social media discussions on platforms like Reddit, Twitter, Facebook, and LinkedIn.
+      4. Search for community forum posts relevant to the job and company.
+      5. Summarize common pros and cons found in the reviews.
+      6. Identify the overall sentiment of the employees and public perception from social discussions.
+      7. Organize this information into the structured format specified in the expected output.
+
+      The content for every must be as long and detailed as possible, providing insights and analysis that can help the company understand its employees and the overall sentiment of the job.
+
+      Ensure that the output is in plain JSON format without any additional formatting, such as ```json notation.
+
+      Input file: crew_io_files/job_analysis.json
+    agent: Sentiment and Social Media Analyst
+    expected_output: |
+      JSON object with the following structure:
+      {
+        "job_title": "string",
+        "company_name": "string",
+        "employee_reviews": [
+          {
+            "platform": "string",
+            "pros": ["string"],
+            "cons": ["string"],
+            "overall_sentiment": "string"
+          }
+        ],
+        "social_media_insights": [
+          {
+            "platform": "string",
+            "positive_points": ["string"],
+            "negative_points": ["string"],
+            "overall_sentiment": "string"
+          }
+        ],
+        "community_forum_insights": [
+          {
+            "forum_name": "string",
+            "positive_points": ["string"],
+            "negative_points": ["string"],
+            "overall_sentiment": "string"
+          }
+        ]
+      }
+    output_json: EmployeeSentimentAndSocialInsightsReport
+    output_file: employee_sentiment.json

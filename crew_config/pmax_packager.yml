@@ -1,0 +1,101 @@
+# https://developers.google.com/google-ads/api/performance-max/asset-requirements
+
+pydantic_models:
+  - name: Images
+    fields:
+      logo: str
+      marketing_image: str
+      square_marketing_image: str
+
+  - name: AssetGroupData
+    fields:
+      campaign_id: str
+      final_urls: "List[str]"
+      final_mobile_urls: "List[str]"
+      headlines: "List[str]"
+      long_headlines: "List[str]"
+      descriptions: "List[str]"
+      business_name: str
+      images: Images
+
+agents:
+  - role: Ad Copy Processor
+    goal: >
+      Load ad copy from a CSV file and insert it into a JSON file containing asset group data for Google Ads.
+    backstory: >
+      You are an AI-driven Ad Copy Processor with expertise in handling and manipulating ad copy data. 
+      Your primary function is to seamlessly integrate ad copy from various sources into structured formats 
+      for use in digital advertising platforms, particularly Google Ads. With your deep understanding of 
+      data structures and ad copy requirements, you ensure that all necessary elements are correctly 
+      placed and formatted for optimal campaign performance.
+
+      Your skills include:
+      1. Proficiency in reading and parsing CSV files containing ad copy.
+      2. Expertise in manipulating JSON structures to incorporate new data.
+      3. Attention to detail in ensuring all required ad copy elements are included and properly formatted.
+      4. Understanding of Google Ads asset group data structure and requirements.
+
+    verbose: True
+    memory: True
+    tools:
+      - file_read_tool
+
+tasks:
+  - name: ProcessAdCopy
+    description: >
+      Load ad copy from a CSV file, read asset group data from a JSON file, integrate the ad copy into the JSON structure, and save the updated JSON file.
+
+      Input Files:
+        - 'crew_io_files/ad_copy_persona_{persona_number}.csv'
+        - 'crew_io_files/job_analysis.json'
+
+      Process:
+      1. Use the file_reader tool to load the CSV file 'crew_io_files/ad_copy_persona_{persona_number}.csv'
+      2. Use the file_reader tool to load the JSON file 'crew_io_files/asset_group_data.json'.
+      3. Parse the CSV data to extract headlines, descriptions, and long headlines.
+      4. Update the asset_group_data JSON structure with the new ad copy:
+         - Replace all existing headlines with the new headlines from the CSV.
+         - Replace all existing descriptions with the new descriptions from the CSV.
+         - Replace all existing long_headlines the new long_headline from the CSV.
+      5. Include the company name from job_analysis into the business name of the asset group JSON.
+      6. Include the job_posting_url in the final_urls and final_mobile_urls arrays.
+      7. Save the updated JSON data back to 'asset_group_data.json'.
+
+    agent: Ad Copy Processor
+    expected_output: |
+      A JSON object containing the candidate demographics report, included the default values shown below and structured as follows:
+      {
+        "campaign_id": "",
+        "final_urls": [
+          ""
+        ],
+        "final_mobile_urls": [
+          ""
+        ],
+        "headlines": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "long_headlines": [
+          "",
+          "",
+          ""
+        
+        ],
+        "descriptions": [
+          "",
+          "",
+          ""
+        ],
+        "business_name": "",
+        "images": {
+          "logo": "crew_io_files/images/logo.jpg",
+          "marketing_image": "crew_io_files/images/marketing_image.jpg",
+          "square_marketing_image": "crew_io_files/images/square_marketing_image.jpg"
+        }
+      }
+    
+    output_json: AssetGroupData
+    output_file: asset_group_data.json
